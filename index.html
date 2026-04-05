@@ -1,469 +1,283 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-PT">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Questionário de Pesquisa: Mercado Municipal de Curitiba</title>
+    <title>Pesquisa PPGTUR/UFPR - Mercados Públicos</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f0f4f8; }
-        .recording-pulse { animation: pulse 1.5s infinite; }
-        @keyframes pulse {
-            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
-            70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
-            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
-        }
-        input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none; appearance: none; width: 24px; height: 24px;
-            background: #2563eb; cursor: pointer; border-radius: 50%; border: 3px solid white;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        .shimmer {
-            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-            background-size: 200% 100%;
-            animation: shimmer-anim 1.5s infinite;
-        }
-        @keyframes shimmer-anim { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #f1f5f9; }
+        input[type="number"] { -moz-appearance: textfield; }
+        input::-webkit-outer-spin-button, input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+        .min-char-feedback { font-size: 0.7rem; font-weight: bold; text-transform: uppercase; }
     </style>
 </head>
-<body class="p-4 md:p-8">
+<body class="p-4 md:p-10 pb-20">
 
-    <div class="max-w-2xl mx-auto space-y-8">
-        <!-- Identidade UFPR com Logo Oficial -->
-        <header class="bg-white p-6 rounded-3xl shadow-sm border border-slate-200 flex items-center gap-5">
-            <img src="https://ufpr.br/wp-content/uploads/2024/03/marca_UFPR.png" 
-                 alt="Logo UFPR" 
-                 class="h-16 w-auto object-contain"
-                 onerror="this.onerror=null; this.src='https://via.placeholder.com/120x60?text=UFPR';">
-            <div>
-                <h1 class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Mestrado em Turismo (PPGTUR)</h1>
-                <p class="text-lg font-bold text-slate-800 leading-tight tracking-tight">Questionário de Pesquisa: Mercado Municipal de Curitiba</p>
+    <div class="max-w-2xl mx-auto bg-white rounded-3xl shadow-2xl border border-slate-200 overflow-hidden">
+        
+        <!-- Cabeçalho Institucional Neutro -->
+        <div class="bg-slate-800 p-8 text-white text-center">
+            <div class="inline-block px-3 py-1 bg-blue-500 rounded-full text-[10px] font-bold tracking-widest uppercase mb-3">
+                Universidade Federal do Paraná
             </div>
-        </header>
+            <h1 class="text-2xl md:text-3xl font-black">Estudo sobre Gestão e Uso do Mercado Municipal</h1>
+            <p class="mt-2 text-slate-400 text-sm">Contributo para o Mestrado em Turismo (PPGTUR/UFPR)</p>
+        </div>
 
-        <form id="surveyForm" class="bg-white rounded-[2.5rem] shadow-xl border border-slate-200 overflow-hidden">
-            <!-- Banner de Abertura Blindado Legalmente -->
-            <div class="bg-slate-900 p-10 text-white text-center">
-                <div class="inline-block px-3 py-1 bg-emerald-500/20 text-emerald-300 rounded-full text-[10px] font-bold tracking-widest uppercase mb-4 border border-emerald-500/30">
-                    Pesquisa de Opinião Pública (Anônima)
-                </div>
-                <h2 class="text-2xl font-extrabold mb-2">Levantamento de Dados Acadêmicos</h2>
-                <p class="text-slate-400 text-sm leading-relaxed max-w-sm mx-auto italic">
-                    Estudo sobre as transformações do MMC ao longo do tempo. Conforme diretrizes éticas, <strong>não coletamos e-mails, endereços de IP ou dados sensíveis</strong>.
-                </p>
+        <div class="p-6 md:p-8 space-y-10">
+            
+            <!-- Nota de Confidencialidade -->
+            <div class="flex items-start gap-4 p-5 bg-blue-50 rounded-2xl border border-blue-100 text-blue-900 text-xs leading-relaxed">
+                <span class="text-xl">🛡️</span>
+                <p><strong>Anonimato Garantido:</strong> Esta pesquisa é estritamente académica. Não é solicitada qualquer identificação pessoal ou do número da unidade (box). Os dados serão analisados de forma agregada.</p>
             </div>
 
-            <!-- Status Bar for Recording/API -->
-            <div id="statusBar" class="hidden mx-8 mt-8 p-4 rounded-2xl text-sm font-bold border flex items-center gap-3">
-                <span id="statusIcon"></span>
-                <span id="statusText"></span>
-            </div>
-
-            <div class="p-8 md:p-12 space-y-12">
-                <!-- SEÇÃO 1: PERFIL -->
-                <section class="space-y-6">
-                    <div class="flex items-center gap-2 text-blue-600 font-black text-[10px] uppercase tracking-[0.2em]">
-                        <i data-lucide="user" class="w-4 h-4"></i> 01. Perfil do Respondente
-                    </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div class="space-y-2">
-                            <label class="text-xs font-bold text-slate-700">Escolaridade</label>
-                            <select id="escolaridade" required class="w-full p-4 bg-slate-50 border-2 border-slate-100 rounded-2xl outline-none focus:border-blue-500 transition-all appearance-none">
-                                <option value="">Selecione...</option>
-                                <option value="fund">Até o Fundamental (antiga 8ª)</option>
-                                <option value="med">Ensino Médio</option>
-                                <option value="sup">Ensino Superior</option>
-                                <option value="pos">Pós-graduação</option>
-                            </select>
-                        </div>
-                        <div class="space-y-2">
-                            <label class="text-xs font-bold text-slate-700">Bairro de Residência</label>
-                            <input type="text" id="bairro" required placeholder="Ex: Água Verde" class="w-full p-4 bg-slate-50 border-2 border-slate-100 rounded-2xl outline-none focus:border-blue-500 transition-all">
-                        </div>
-                        <div class="space-y-2">
-                            <label class="text-xs font-bold text-slate-700">Idade</label>
-                            <input type="number" id="idade" required placeholder="Ex: 40" class="w-full p-4 bg-slate-50 border-2 border-slate-100 rounded-2xl outline-none focus:border-blue-500 transition-all">
-                        </div>
-                    </div>
-                </section>
-
-                <!-- SEÇÃO 2: ESTABELECIMENTO -->
-                <section class="space-y-6 pt-6 border-t border-slate-50">
-                    <div class="flex items-center gap-2 text-blue-600 font-black text-[10px] uppercase tracking-[0.2em]">
-                        <i data-lucide="store" class="w-4 h-4"></i> 02. Dados do Estabelecimento no MMC
-                    </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div class="space-y-2">
-                            <label class="text-xs font-bold text-slate-700">Ramo de Atividade</label>
-                            <select id="tipo_negocio" required class="w-full p-4 bg-slate-50 border-2 border-slate-100 rounded-2xl outline-none focus:border-blue-500 transition-all appearance-none">
-                                <option value="">Selecione o ramo...</option>
-                            </select>
-                        </div>
-                        <div class="space-y-2">
-                            <label class="text-xs font-bold text-slate-700">Tempo no Mercado (Anos)</label>
-                            <input type="number" id="tempo_mercado" required placeholder="Ex: 10" class="w-full p-4 bg-slate-50 border-2 border-slate-100 rounded-2xl outline-none focus:border-blue-500 transition-all">
-                        </div>
-                    </div>
-
-                    <!-- SLIDERS BALANÇO -->
-                    <div class="bg-blue-50 p-8 rounded-[2.5rem] border border-blue-100 space-y-8 mt-6">
-                        <div class="flex items-center gap-2 text-[10px] font-black text-blue-600 uppercase mb-2">
-                            <i data-lucide="trending-up" class="w-4 h-4"></i> Perfil Habitual dos Clientes (Total: 100%)
-                        </div>
-                        <div class="space-y-8">
-                            <div class="space-y-2">
-                                <div class="flex justify-between text-xs font-black text-blue-900">
-                                    <span>MORADOR LOCAL</span>
-                                    <span id="label_local" class="text-lg">50%</span>
-                                </div>
-                                <input type="range" id="perc_local" min="0" max="100" value="50" class="w-full h-3 bg-slate-200 rounded-full appearance-none accent-blue-600 cursor-pointer">
-                            </div>
-                            <div class="space-y-2">
-                                <div class="flex justify-between text-xs font-black text-emerald-700">
-                                    <span>TURISTA</span>
-                                    <span id="label_turista" class="text-lg">50%</span>
-                                </div>
-                                <input type="range" id="perc_turista" min="0" max="100" value="50" class="w-full h-3 bg-slate-200 rounded-full appearance-none accent-emerald-500 cursor-pointer">
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- SEÇÃO 3: QUALITATIVO -->
-                <section class="space-y-10 pt-6 border-t border-slate-50">
-                    <div class="flex items-center gap-2 text-blue-600 font-black text-[10px] uppercase tracking-[0.2em]">
-                        <i data-lucide="message-square" class="w-4 h-4"></i> 03. Percepções Qualitativas
-                    </div>
-
-                    <div class="space-y-8" id="qualitative-fields">
-                        <!-- Campos injetados via JS -->
-                    </div>
-                </section>
-
-                <!-- SEÇÃO 4: TERMO DE CONSENTIMENTO E ÉTICA (ATUALIZADO) -->
-                <section class="space-y-4 pt-6 border-t border-slate-50">
-                    <div class="bg-slate-50 p-6 md:p-8 rounded-3xl border border-slate-200 text-sm text-slate-600">
-                        <h4 class="font-bold text-slate-800 mb-3 flex items-center gap-2">
-                            <i data-lucide="shield" class="w-5 h-5 text-blue-600"></i> Termo de Consentimento Livre e Esclarecido (TCLE)
-                        </h4>
-                        <p class="mb-5 text-xs leading-relaxed text-justify">
-                            Declaro que fui devidamente informado(a) sobre os objetivos desta pesquisa vinculada ao Mestrado em Turismo (PPGTUR/UFPR). Confirmo que a minha participação é voluntária e que se trata de uma <strong>Pesquisa de Opinião Pública com participantes não identificados</strong>. Estou ciente de que o sistema da pesquisa foi configurado para garantir o meu total anonimato, garantindo que <strong>não sejam coletados endereços de e-mail, registros de IP da conexão ou dados sensíveis e de identificação direta</strong> (como nome, CPF, ou número do box comercial). Por se enquadrar como pesquisa de opinião não identificada, compreendo que esta coleta de dados está amparada e <strong>dispensada de submissão ao Comitê de Ética (CEP)</strong>, conforme estabelece o Art. 1º, Parágrafo Único, incisos I e II da <strong><a href="https://conselho.saude.gov.br/resolucoes/2016/Reso510_Etica_Pesq_Humanas_Sociais.pdf" target="_blank" class="text-blue-600 hover:underline">Resolução CNS nº 510/2016</a></strong>, estando em plena conformidade com a <strong><a href="https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm" target="_blank" class="text-blue-600 hover:underline">Lei Geral de Proteção de Dados Pessoais (LGPD - Lei nº 13.709/2018)</a></strong>.
-                        </p>
-                        <label class="flex items-start gap-4 cursor-pointer group">
-                            <div class="relative flex items-center justify-center mt-0.5 shrink-0">
-                                <input type="checkbox" required class="peer appearance-none w-6 h-6 border-2 border-slate-300 rounded bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500/30 transition-all cursor-pointer shadow-sm">
-                                <i data-lucide="check" class="absolute w-4 h-4 text-white opacity-0 peer-checked:opacity-100 pointer-events-none"></i>
-                            </div>
-                            <span class="text-xs md:text-sm font-bold text-slate-700 group-hover:text-blue-700 transition-colors leading-snug">
-                                Declaro que li as informações acima, compreendo a garantia de anonimato e aceito participar voluntariamente desta pesquisa de opinião pública.
-                            </span>
-                        </label>
-                    </div>
-                </section>
-
-                <button type="submit" class="w-full bg-slate-900 text-white font-black py-6 rounded-3xl shadow-2xl hover:bg-black transition-all transform hover:scale-[1.02] flex items-center justify-center gap-3 uppercase tracking-widest text-sm">
-                    ENVIAR RESPOSTAS 🚀
-                </button>
+            <form id="surveyForm" class="space-y-12">
                 
-                <p class="text-center text-[10px] text-slate-400 font-bold uppercase tracking-widest">
-                    Universidade Federal do Paraná • PPGTUR • 2026
-                </p>
-            </div>
-        </form>
+                <!-- SEÇÃO 1: ÍNDICE SOCIAL E PERFIL -->
+                <section class="space-y-6">
+                    <h2 class="text-sm font-black text-slate-500 uppercase tracking-widest flex items-center gap-2">
+                        <span class="bg-slate-100 text-slate-700 w-6 h-6 rounded-full inline-flex items-center justify-center">1</span>
+                        Índice Social e Identificação de Perfil
+                    </h2>
+
+                    <div class="grid grid-cols-1 gap-6">
+                        <div>
+                            <label class="block text-sm font-bold text-slate-700 mb-2">Qual o seu nível de escolaridade?</label>
+                            <select name="escolaridade" required class="w-full p-4 bg-slate-50 border-2 border-slate-200 rounded-xl focus:border-blue-500 outline-none">
+                                <option value="">Selecione...</option>
+                                <option value="fundamental-incompleto">Ensino Fundamental Incompleto</option>
+                                <option value="fundamental-completo">Ensino Fundamental Completo</option>
+                                <option value="medio-completo">Ensino Médio Completo</option>
+                                <option value="superior-ou-mais">Ensino Superior ou Pós-Graduação</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-bold text-slate-700 mb-2">Em que bairro ou região reside?</label>
+                            <input type="text" name="bairro" required class="w-full p-4 bg-slate-50 border-2 border-slate-200 rounded-xl focus:border-blue-500 outline-none" placeholder="Ex: Cajuru, Centro, Pinhais...">
+                        </div>
+                    </div>
+                </section>
+
+                <!-- SEÇÃO 2: DADOS DE OPERAÇÃO (EXATIDÃO NUMÉRICA) -->
+                <section class="space-y-6">
+                    <h2 class="text-sm font-black text-slate-500 uppercase tracking-widest flex items-center gap-2">
+                        <span class="bg-slate-100 text-slate-700 w-6 h-6 rounded-full inline-flex items-center justify-center">2</span>
+                        Atividade e Dinâmica de Público
+                    </h2>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-bold text-slate-700 mb-2">Há quantos anos trabalha no local?</label>
+                            <input type="number" name="anos_atuacao" required min="0" class="w-full p-4 bg-slate-50 border-2 border-slate-200 rounded-xl focus:border-blue-500 outline-none" placeholder="Só números">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold text-slate-700 mb-2">Quantas pessoas trabalham no box?</label>
+                            <input type="number" name="equipe_total" required min="1" class="w-full p-4 bg-slate-50 border-2 border-slate-200 rounded-xl focus:border-blue-500 outline-none" placeholder="Só números">
+                        </div>
+                    </div>
+
+                    <div class="pt-4">
+                        <label class="block text-sm font-bold text-slate-700 mb-4 italic text-slate-500">
+                            De cada 10 clientes atendidos hoje, quantos estima que pertencem a cada grupo?
+                        </label>
+                        <div class="space-y-6 bg-slate-50 p-6 rounded-3xl border-2 border-slate-100">
+                            <div class="flex flex-col gap-2">
+                                <div class="flex justify-between text-xs font-black uppercase text-blue-600">
+                                    <span>Público Local (Curitiba e Região)</span>
+                                    <span id="label_local">5</span>
+                                </div>
+                                <input type="range" name="cli_local" min="0" max="10" value="5" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-blue-600">
+                            </div>
+                            <div class="flex flex-col gap-2">
+                                <div class="flex justify-between text-xs font-black uppercase text-emerald-600">
+                                    <span>Turistas (Visitantes externos)</span>
+                                    <span id="label_turista">5</span>
+                                </div>
+                                <input type="range" name="cli_turista" min="0" max="10" value="5" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-500">
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- SEÇÃO 3: PERCEPÇÕES QUALITATIVAS (NÃO INDUTIVAS) -->
+                <section class="space-y-8">
+                    <h2 class="text-sm font-black text-slate-500 uppercase tracking-widest flex items-center gap-2">
+                        <span class="bg-slate-100 text-slate-700 w-6 h-6 rounded-full inline-flex items-center justify-center">3</span>
+                        Avaliação da Gestão e do Espaço
+                    </h2>
+
+                    <!-- Pergunta 1: Transformação do Público -->
+                    <div class="space-y-2">
+                        <label class="block text-sm font-bold text-slate-800 leading-snug">
+                            1. Ao longo do tempo, o Mercado passou por renovações físicas e de público. Na sua percepção, como essas alterações afetaram a rotina de vendas e o ambiente do seu box?
+                        </label>
+                        <textarea id="txt1" data-min="100" required class="w-full p-4 bg-slate-50 border-2 border-slate-200 rounded-xl focus:border-blue-500 outline-none min-h-[140px]" placeholder="Descreva a sua visão sobre estas mudanças..."></textarea>
+                        <div class="flex justify-between items-center px-1">
+                            <span id="warn1" class="min-char-feedback text-red-500">Aguardando mais detalhes...</span>
+                            <span id="count1" class="text-[10px] text-slate-400 font-mono">0 / 100 caracteres</span>
+                        </div>
+                    </div>
+
+                    <!-- Pergunta 2: Comparação de Gestão (O Álibi do Abastecimento) -->
+                    <div class="space-y-2">
+                        <label class="block text-sm font-bold text-slate-800 leading-snug">
+                            2. Como avalia a atenção dada pela Prefeitura ao Mercado Municipal em comparação com outros equipamentos da rede municipal, como os Sacolões da Família e Armazéns?
+                        </label>
+                        <textarea id="txt2" data-min="120" required class="w-full p-4 bg-slate-50 border-2 border-slate-200 rounded-xl focus:border-blue-500 outline-none min-h-[140px]" placeholder="A sua comparação é fundamental para o estudo das políticas públicas..."></textarea>
+                        <div class="flex justify-between items-center px-1">
+                            <span id="warn2" class="min-char-feedback text-red-500">Aguardando mais detalhes...</span>
+                            <span id="count2" class="text-[10px] text-slate-400 font-mono">0 / 120 caracteres</span>
+                        </div>
+                    </div>
+
+                    <!-- Pergunta 3: Melhorias e Equilíbrio -->
+                    <div class="space-y-2">
+                        <label class="block text-sm font-bold text-slate-800 leading-snug">
+                            3. Que medidas ou mudanças de gestão considera necessárias para equilibrar o atendimento às necessidades do trabalhador, do cliente habitual e do turista?
+                        </label>
+                        <textarea id="txt3" data-min="100" required class="w-full p-4 bg-slate-50 border-2 border-slate-200 rounded-xl focus:border-blue-500 outline-none min-h-[140px]" placeholder="Apresente as suas sugestões de melhoria..."></textarea>
+                        <div class="flex justify-between items-center px-1">
+                            <span id="warn3" class="min-char-feedback text-red-500">Aguardando mais detalhes...</span>
+                            <span id="count3" class="text-[10px] text-slate-400 font-mono">0 / 100 caracteres</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Ação Final -->
+                <div class="pt-8 border-t-2 border-slate-100 text-center">
+                    <button type="button" onclick="validateAndSubmit()" class="w-full bg-slate-900 hover:bg-black text-white font-black py-5 rounded-2xl shadow-xl transition-all uppercase tracking-widest text-sm flex items-center justify-center gap-3 group">
+                        <span>Validar e Enviar Respostas</span>
+                        <span class="group-hover:translate-x-1 transition-transform">→</span>
+                    </button>
+                    <p class="mt-6 text-[10px] text-slate-400 font-bold uppercase tracking-widest">
+                        PPGTUR / UFPR &bull; Pesquisa de Mestrado em Turismo
+                    </p>
+                </div>
+
+            </form>
+        </div>
     </div>
 
-    <!-- MODAL DE SUCESSO E IA -->
-    <div id="successModal" class="fixed inset-0 bg-slate-900/90 backdrop-blur-md hidden flex items-center justify-center p-4 z-50 overflow-y-auto">
-        <div class="bg-white rounded-[3rem] p-8 md:p-12 max-w-2xl w-full shadow-2xl my-8 text-center">
-            <div class="mb-10">
-                <div class="w-20 h-20 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <i data-lucide="check-circle" class="w-10 h-10"></i>
-                </div>
-                <h3 class="text-3xl font-black text-slate-900">Muito obrigado!</h3>
-                <p class="text-slate-500 mt-2 italic">Sua voz contribuirá para a ciência sobre o Mercado Municipal de Curitiba.</p>
-            </div>
-
-            <div class="bg-slate-50 border-2 border-blue-100 rounded-[2.5rem] p-8 space-y-6 text-left">
-                <div class="flex items-center gap-3">
-                    <span class="text-2xl">✨</span>
-                    <h4 class="font-black text-slate-800 text-sm uppercase tracking-widest">Análise Inteligente Local (Gemini)</h4>
-                </div>
-                
-                <div id="geminiOutput" class="hidden text-sm text-slate-700 leading-relaxed bg-white p-6 rounded-3xl shadow-inner border border-slate-100 whitespace-pre-wrap"></div>
-                
-                <div id="geminiLoading" class="hidden space-y-3 p-4">
-                    <div class="h-4 w-full bg-slate-200 animate-pulse rounded-full"></div>
-                    <div class="h-4 w-5/6 bg-slate-200 animate-pulse rounded-full"></div>
-                    <div class="h-4 w-2/3 bg-slate-200 animate-pulse rounded-full"></div>
-                </div>
-
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <button id="btnReflect" onclick="callGemini('reflect')" class="bg-white border-2 border-blue-500 text-blue-600 font-bold py-4 rounded-2xl hover:bg-blue-50 transition-all text-xs flex items-center justify-center gap-2">
-                         ✨ Analisar visão
-                    </button>
-                    <button id="btnSuggest" onclick="callGemini('suggest')" class="bg-white border-2 border-blue-500 text-blue-600 font-bold py-4 rounded-2xl hover:bg-blue-50 transition-all text-xs flex items-center justify-center gap-2">
-                         ✨ Sugerir melhorias
-                    </button>
-                </div>
-            </div>
-
-            <button onclick="window.location.reload()" class="mt-10 w-full text-slate-400 font-bold text-xs uppercase tracking-widest hover:text-slate-900 transition-all">Finalizar e fechar</button>
+    <!-- Modal de Confirmação -->
+    <div id="successModal" class="fixed inset-0 bg-slate-900/90 backdrop-blur-md hidden flex items-center justify-center p-6 z-50">
+        <div class="bg-white rounded-3xl p-8 max-w-sm w-full text-center shadow-2xl">
+            <div class="w-20 h-20 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mx-auto mb-6 text-4xl">🎓</div>
+            <h3 class="text-2xl font-black text-slate-900 mb-2">Dados Registados</h3>
+            <p class="text-slate-600 text-sm mb-8 italic">Obrigado pela sua contribuição valiosa para a investigação da Universidade Federal do Paraná.</p>
+            <button onclick="window.location.reload()" class="w-full bg-slate-900 text-white font-bold py-4 rounded-xl hover:bg-black transition-colors">Concluído</button>
         </div>
     </div>
 
     <script>
-        // CHAVES DA API
-        const geminiApiKey = ""; // Automático pelo ambiente
-        const groqApiKey = "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";
+        // Gestão dos Sliders (0 a 10)
+        const sLocal = document.querySelector('input[name="cli_local"]');
+        const sTurista = document.querySelector('input[name="cli_turista"]');
+        const lLocal = document.getElementById('label_local');
+        const lTurista = document.getElementById('label_turista');
 
-        const establishmentTypes = [
-            "Açougue", "Aquário", "Armarinhos e Costuras", "Artesanatos", "Barbearia e Cabeleireiros", 
-            "Bebidas", "Bolachas", "Café e Chás", "Calçados e Confecções", "Cereais", "Chapelaria", 
-            "Chocolates", "Congelados", "Cosméticos", "Doces", "Eletrônicos", "Embalagens", 
-            "Especiarias", "Farmácia", "Floricultura", "Frutas e Verduras", "Loterias", "Massas", 
-            "Materiais Elétricos e Hidráulicos", "Mercearias e Empórios", "Orgânicos", "Papelaria", 
-            "Peixaria", "Pet Shop", "Presentes", "Relojoaria", "Restaurantes e Lanchonetes", 
-            "Revistaria", "Sapataria", "Serviços", "Tabacaria", "Utilidades Domésticas"
+        sLocal.addEventListener('input', () => {
+            const val = parseInt(sLocal.value);
+            sTurista.value = 10 - val;
+            lLocal.textContent = val;
+            lTurista.textContent = 10 - val;
+        });
+
+        sTurista.addEventListener('input', () => {
+            const val = parseInt(sTurista.value);
+            sLocal.value = 10 - val;
+            lTurista.textContent = val;
+            lLocal.textContent = 10 - val;
+        });
+
+        // Validação de Caracteres em Tempo Real
+        const fields = [
+            { id: 'txt1', warn: 'warn1', count: 'count1' },
+            { id: 'txt2', warn: 'warn2', count: 'count2' },
+            { id: 'txt3', warn: 'warn3', count: 'count3' }
         ];
-        
-        // Perguntas Estratégicas perfeitamente alinhadas ao Panorama (Encaminhamentos 27/03)
-        const questions = [
-            { id: 'qa1', label: '1. O Mercado Municipal passou por diversas mudanças desde a sua inauguração. Como a chegada do turismo gastronômico afetou as suas vendas diárias e o perfil do seu cliente tradicional?' },
-            { id: 'qa2', label: '2. Pensando nas reformas e modernizações recentes, como isso impactou os custos de manutenção do seu negócio (taxas, aluguéis) e as regras de funcionamento do seu box?' },
-            { id: 'qa3', label: '3. Na sua visão, os investimentos e a gestão da Prefeitura dentro do Mercado focam mais em garantir o abastecimento de alimentos para a população ou em criar uma "vitrine" para atrair turistas?' },
-            { id: 'qa4', label: '4. Enquanto o interior do Mercado se modernizou, como você descreve a convivência e a segurança nas calçadas do entorno, especialmente em relação aos trabalhadores informais e pessoas em situação de rua?' },
-            { id: 'qa5', label: '5. Se você pudesse sugerir uma mudança na gestão ou estrutura do Mercado para torná-lo mais justo para o lojista e para o morador de Curitiba, qual seria?' }
-        ];
 
-        let mediaRecorder;
-        let audioChunks = [];
-        let activeFieldId = null;
+        fields.forEach(f => {
+            const el = document.getElementById(f.id);
+            const warn = document.getElementById(f.warn);
+            const counter = document.getElementById(f.count);
+            const min = parseInt(el.getAttribute('data-min'));
 
-        window.onload = () => {
-            initForm();
-            lucide.createIcons();
-        };
-
-        function showStatus(text, type = 'info') {
-            const bar = document.getElementById('statusBar');
-            const icon = document.getElementById('statusIcon');
-            const txt = document.getElementById('statusText');
-            
-            bar.classList.remove('hidden', 'bg-blue-50', 'text-blue-700', 'border-blue-100', 'bg-red-50', 'text-red-700', 'border-red-100', 'bg-emerald-50', 'text-emerald-700', 'border-emerald-100');
-            
-            if(type === 'error') {
-                bar.classList.add('bg-red-50', 'text-red-700', 'border-red-100');
-                icon.innerHTML = '<i data-lucide="alert-circle"></i>';
-            } else if(type === 'success') {
-                bar.classList.add('bg-emerald-50', 'text-emerald-700', 'border-emerald-100');
-                icon.innerHTML = '<i data-lucide="check"></i>';
-            } else {
-                bar.classList.add('bg-blue-50', 'text-blue-700', 'border-blue-100');
-                icon.innerHTML = '<i data-lucide="info"></i>';
-            }
-            
-            txt.innerText = text;
-            lucide.createIcons();
-            
-            if(type !== 'error') {
-                setTimeout(() => bar.classList.add('hidden'), 5000);
-            }
-        }
-
-        function initForm() {
-            const select = document.getElementById('tipo_negocio');
-            establishmentTypes.sort().forEach(t => {
-                const opt = document.createElement('option');
-                opt.value = t; opt.textContent = t;
-                select.appendChild(opt);
+            el.addEventListener('input', () => {
+                const len = el.value.trim().length;
+                counter.textContent = `${len} / ${min} caracteres`;
+                
+                if (len >= min) {
+                    warn.textContent = "Conteúdo densidade OK ✓";
+                    warn.classList.replace('text-red-500', 'text-emerald-500');
+                    el.classList.replace('border-slate-200', 'border-emerald-200');
+                } else {
+                    warn.textContent = `Aguardando mais ${min - len} caracteres...`;
+                    warn.classList.replace('text-emerald-500', 'text-red-500');
+                    el.classList.replace('border-emerald-200', 'border-slate-200');
+                }
             });
+        });
 
-            const qualContainer = document.getElementById('qualitative-fields');
-            questions.forEach(q => {
-                const div = document.createElement('div');
-                div.className = "space-y-4";
-                div.innerHTML = `
-                    <label class="text-sm font-bold text-slate-800 leading-snug block">${q.label}</label>
-                    <div class="relative">
-                        <textarea id="${q.id}" required placeholder="Clique no microfone para falar ou digite aqui..." 
-                            class="w-full p-6 bg-slate-50 border-2 border-slate-100 rounded-3xl min-h-[140px] outline-none focus:border-blue-500 text-sm pr-16 shadow-sm transition-all"></textarea>
-                        <button type="button" id="mic-${q.id}" onclick="toggleGroqRecording('${q.id}')"
-                            class="absolute top-4 right-4 p-3 rounded-2xl shadow-lg transition-all bg-white text-slate-400 hover:text-blue-600 border border-slate-100">
-                            <i data-lucide="mic" class="w-5 h-5"></i>
-                        </button>
-                    </div>
-                `;
-                qualContainer.appendChild(div);
-            });
+        function validateAndSubmit() {
+            const form = document.getElementById('surveyForm');
+            let isValid = true;
 
-            const rLocal = document.getElementById('perc_local');
-            const rTurista = document.getElementById('perc_turista');
-            rLocal.oninput = () => { rTurista.value = 100 - rLocal.value; updateLabels(); };
-            rTurista.oninput = () => { rLocal.value = 100 - rTurista.value; updateLabels(); };
-            
-            document.getElementById('surveyForm').onsubmit = (e) => {
-                e.preventDefault();
-                document.getElementById('successModal').classList.remove('hidden');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            };
-        }
-
-        function updateLabels() {
-            document.getElementById('label_local').innerText = document.getElementById('perc_local').value + '%';
-            document.getElementById('label_turista').innerText = document.getElementById('perc_turista').value + '%';
-        }
-
-        async function toggleGroqRecording(id) {
-            const btn = document.getElementById(`mic-${id}`);
-            if (activeFieldId === id) { stopRecording(); return; }
-            if (activeFieldId) stopRecording();
-
-            if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-                showStatus("Seu navegador não tem acesso ao microfone. Verifique se está usando HTTPS.", "error");
+            // Validação de campos obrigatórios
+            if (!form.checkValidity()) {
+                alert("Por favor, preencha todos os campos do formulário antes de enviar.");
                 return;
             }
 
-            try {
-                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-                const options = { mimeType: 'audio/webm;codecs=opus' };
-                if (!MediaRecorder.isTypeSupported(options.mimeType)) {
-                    delete options.mimeType;
+            // Validação de densidade textual
+            fields.forEach(f => {
+                const el = document.getElementById(f.id);
+                if (el.value.trim().length < parseInt(el.getAttribute('data-min'))) {
+                    isValid = false;
+                    el.classList.add('ring-2', 'ring-red-500');
+                    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                } else {
+                    el.classList.remove('ring-2', 'ring-red-500');
                 }
-                
-                mediaRecorder = new MediaRecorder(stream, options);
-                audioChunks = [];
-                activeFieldId = id;
+            });
 
-                mediaRecorder.ondataavailable = (event) => {
-                    if (event.data.size > 0) audioChunks.push(event.data);
+            if (isValid) {
+                const btn = document.querySelector('button[onclick="validateAndSubmit()"]');
+                const originalText = btn.innerHTML;
+                btn.innerHTML = '<span>SALVANDO NA NUVEM... ⏳</span>';
+                btn.disabled = true;
+
+                // Captura todos os dados do formulário atualizado
+                const formData = {
+                    data_hora: new Date().toLocaleString('pt-BR'),
+                    escolaridade: document.querySelector('select[name="escolaridade"]').value,
+                    bairro: document.querySelector('input[name="bairro"]').value,
+                    anos_atuacao: document.querySelector('input[name="anos_atuacao"]').value,
+                    equipe_total: document.querySelector('input[name="equipe_total"]').value,
+                    cli_local: document.querySelector('input[name="cli_local"]').value,
+                    cli_turista: document.querySelector('input[name="cli_turista"]').value,
+                    qa1: document.getElementById('txt1').value,
+                    qa2: document.getElementById('txt2').value,
+                    qa3: document.getElementById('txt3').value
                 };
 
-                mediaRecorder.onstop = () => {
-                    processAudioWithGroq(audioChunks, id, mediaRecorder.mimeType);
-                    stream.getTracks().forEach(track => track.stop());
-                };
-
-                mediaRecorder.start();
-                btn.classList.remove('bg-white', 'text-slate-400');
-                btn.classList.add('bg-red-500', 'text-white', 'recording-pulse');
-                btn.innerHTML = '<i data-lucide="mic-off" class="w-5 h-5"></i>';
-                lucide.createIcons();
-                showStatus("Gravando... Fale agora.");
-            } catch (err) { 
-                console.error(err);
-                showStatus("Erro ao acessar microfone: " + err.message, "error"); 
-            }
-        }
-
-        function stopRecording() {
-            if (mediaRecorder && mediaRecorder.state !== 'inactive') {
-                mediaRecorder.stop();
-                const btn = document.getElementById(`mic-${activeFieldId}`);
-                btn.classList.remove('bg-red-500', 'text-white', 'recording-pulse');
-                btn.classList.add('bg-white', 'text-slate-400');
-                btn.innerHTML = '<i data-lucide="mic" class="w-5 h-5"></i>';
-                lucide.createIcons();
-                activeFieldId = null;
-            }
-        }
-
-        async function processAudioWithGroq(chunks, id, mimeType) {
-            const textArea = document.getElementById(id);
-            const originalPlaceholder = textArea.placeholder;
-            textArea.placeholder = "Transcrevendo com Whisper Turbo... 🚀";
-            showStatus("Processando áudio...");
-            
-            const fileType = mimeType || 'audio/webm';
-            const audioBlob = new Blob(chunks, { type: fileType });
-            const formData = new FormData();
-            
-            formData.append('file', audioBlob, 'audio.webm');
-            formData.append('model', 'whisper-large-v3-turbo');
-            formData.append('temperature', '0'); 
-            formData.append('language', 'pt'); 
-            formData.append('response_format', 'json'); 
-
-            try {
-                const response = await fetch('https://api.groq.com/openai/v1/audio/transcriptions', {
+                // Envia para a sua URL exclusiva do Google Apps Script
+                fetch("https://script.google.com/macros/s/AKfycbxHTWemb7CkVbghS6EaKkPFG6VOF7_ryQUbmPGpFi1hYaq-QrlOPTczxN8RV56hqGdf/exec", {
                     method: 'POST',
-                    headers: { 'Authorization': `Bearer ${groqApiKey}` },
-                    body: formData
-                });
-
-                if (!response.ok) {
-                    const errData = await response.json();
-                    throw new Error(errData.error?.message || "Erro na API da Groq");
-                }
-
-                const data = await response.json();
-                if (data.text) {
-                    textArea.value = (textArea.value + ' ' + data.text).trim();
-                    showStatus("Transcrição concluída com sucesso!", "success");
-                }
-            } catch (err) { 
-                console.error(err);
-                showStatus("Falha na transcrição: " + err.message, "error"); 
-                document.getElementById('statusBar').classList.remove('hidden');
-            } finally { 
-                textArea.placeholder = originalPlaceholder; 
-            }
-        }
-
-        async function fetchWithRetry(prompt, retries = 5, delay = 1000) {
-            const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${geminiApiKey}`;
-            try {
-                const response = await fetch(endpoint, {
-                    method: 'POST',
+                    mode: 'no-cors', // Necessário para evitar bloqueios de segurança do navegador
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        contents: [{ parts: [{ text: prompt }] }],
-                        systemInstruction: { parts: [{ text: "Você é um consultor acadêmico especialista em turismo no Mercado Municipal de Curitiba." }] }
-                    })
+                    body: JSON.stringify(formData)
+                }).then(() => {
+                    // Exibe o modal de sucesso
+                    document.getElementById('successModal').classList.remove('hidden');
+                }).catch((error) => {
+                    alert("Erro ao conectar com a nuvem. Verifique sua conexão de internet.");
+                    btn.innerHTML = originalText;
+                    btn.disabled = false;
                 });
-                if (!response.ok) throw new Error();
-                return await response.json();
-            } catch (err) {
-                if (retries > 0) {
-                    await new Promise(r => setTimeout(r, delay));
-                    return fetchWithRetry(prompt, retries - 1, delay * 2);
-                }
-                throw err;
-            }
-        }
-
-        async function callGemini(mode) {
-            const output = document.getElementById('geminiOutput');
-            const loader = document.getElementById('geminiLoading');
-            const btns = [document.getElementById('btnReflect'), document.getElementById('btnSuggest')];
-            
-            const q1 = document.getElementById('qa1').value;
-            const q2 = document.getElementById('qa2').value;
-            const q3 = document.getElementById('qa3').value;
-            const q4 = document.getElementById('qa4').value;
-            const q5 = document.getElementById('qa5').value;
-            const ramo = document.getElementById('tipo_negocio').value;
-            
-            // O prompt foi atualizado para processar as 5 variáveis do questionário
-            const prompt = mode === 'reflect' 
-                ? `Analise as respostas de um lojista de ${ramo} no MMC. Impacto nas vendas e cliente: ${q1} | Impacto em Custos e Regras de Operação: ${q2} | Percepção da Gestão (Abastecimento vs Turismo): ${q3} | Percepção do Entorno (Circuito Inferior e Informalidade): ${q4} | Propostas: ${q5}. Faça uma reflexão analítica (3 parágrafos) ligando isso ao circuito inferior da economia e gentrificação.` 
-                : `Dê 3 dicas práticas para o box de ${ramo} baseado no cenário real do mercado. Visão do Entorno e Segurança: ${q4} | Sugestões do Lojista: ${q5}. Foque no equilíbrio entre atrair o turista e manter o público local ativo.`;
-            
-            output.classList.add('hidden');
-            loader.classList.remove('hidden');
-            btns.forEach(b => b.disabled = true);
-
-            try {
-                const data = await fetchWithRetry(prompt);
-                output.innerText = data.candidates?.[0]?.content?.parts?.[0]?.text || "Erro na geração da resposta.";
-                output.classList.remove('hidden');
-            } catch (e) { 
-                output.innerText = "Falha na conexão com a IA. Verifique a rede e tente novamente."; 
-                output.classList.remove('hidden'); 
-            } finally { 
-                loader.classList.add('hidden'); 
-                btns.forEach(b => b.disabled = false);
             }
         }
     </script>
