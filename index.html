@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Questionário de Pesquisa: Mercado Municipal de Curitiba</title>
+    <title>Pesquisa: Mercado Municipal de Curitiba</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f0f4f8; }
         .recording-pulse { animation: pulse 1.5s infinite; }
@@ -15,135 +15,61 @@
             70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
             100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
         }
-        input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none; appearance: none; width: 24px; height: 24px;
-            background: #2563eb; cursor: pointer; border-radius: 50%; border: 3px solid white;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
     </style>
 </head>
 <body class="p-4 md:p-8">
 
     <div class="max-w-2xl mx-auto space-y-8">
-        
         <header class="bg-white p-6 rounded-3xl shadow-sm border border-slate-200 flex items-center gap-5">
-            <img src="https://ufpr.br/wp-content/uploads/2024/03/marca_UFPR.png" 
-                 alt="Logo UFPR" 
-                 class="h-16 w-auto object-contain"
-                 onerror="this.onerror=null; this.src='https://via.placeholder.com/120x60?text=UFPR';">
+            <img src="https://ufpr.br/wp-content/uploads/2024/03/marca_UFPR.png" class="h-14 w-auto" alt="UFPR">
             <div>
-                <h1 class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Mestrado em Turismo (PPGTUR)</h1>
-                <p class="text-lg font-bold text-slate-800 leading-tight tracking-tight">Questionário de Pesquisa: Mercado Municipal de Curitiba</p>
+                <h1 class="text-[10px] font-black uppercase tracking-widest text-slate-400">Mestrado em Turismo</h1>
+                <p class="text-lg font-bold text-slate-800 leading-tight">Pesquisa MMC: Relatos de Lojistas</p>
             </div>
         </header>
 
         <form id="surveyForm" class="bg-white rounded-[2.5rem] shadow-xl border border-slate-200 overflow-hidden">
-            
-            <div class="bg-slate-900 p-10 text-white text-center">
-                <div class="inline-block px-3 py-1 bg-emerald-500/20 text-emerald-300 rounded-full text-[10px] font-bold tracking-widest uppercase mb-4 border border-emerald-500/30">
-                    Pesquisa de Opinião Pública (Anônima)
-                </div>
-                <h2 class="text-2xl font-extrabold mb-2">Levantamento de Dados Acadêmicos</h2>
-                <p class="text-slate-400 text-sm leading-relaxed max-w-sm mx-auto italic">
-                    Estudo sobre as transformações do MMC ao longo do tempo para fins de dissertação de Mestrado.
-                </p>
+            <div class="bg-slate-900 p-8 text-white text-center">
+                <h2 class="text-xl font-extrabold mb-2">Coleta de Dados Qualitativos</h2>
+                <p class="text-slate-400 text-xs italic">Sua voz ajudará a entender e melhorar o Mercado Municipal.</p>
             </div>
 
-            <div id="statusBar" class="hidden mx-8 mt-8 p-4 rounded-2xl text-sm font-bold border flex items-center gap-3 transition-all">
+            <div id="statusBar" class="hidden mx-8 mt-6 p-4 rounded-2xl text-sm font-bold border flex items-center gap-3 transition-all">
                 <span id="statusIcon"></span>
                 <span id="statusText"></span>
             </div>
 
-            <div class="p-8 md:p-12 space-y-12">
-                
-                <section class="space-y-6">
-                    <div class="flex items-center gap-2 text-blue-600 font-black text-[10px] uppercase tracking-[0.2em]">
-                        <i data-lucide="user" class="w-4 h-4"></i> 01. Perfil do Respondente
+            <div class="p-8 space-y-10">
+                <section class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="space-y-2">
+                        <label class="text-xs font-bold text-slate-700">Ramo de Atividade</label>
+                        <select id="tipo_negocio" required class="w-full p-4 bg-slate-50 border-2 border-slate-100 rounded-2xl outline-none focus:border-blue-500 transition-all"></select>
                     </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div class="space-y-2">
-                            <label class="text-xs font-bold text-slate-700">Escolaridade</label>
-                            <select id="escolaridade" required class="w-full p-4 bg-slate-50 border-2 border-slate-100 rounded-2xl outline-none focus:border-blue-500 transition-all">
-                                <option value="">Selecione...</option>
-                                <option value="fundamental">Até o Fundamental</option>
-                                <option value="medio">Ensino Médio</option>
-                                <option value="superior">Ensino Superior</option>
-                                <option value="pos">Pós-graduação</option>
-                            </select>
-                        </div>
-                        <div class="space-y-2">
-                            <label class="text-xs font-bold text-slate-700">Bairro de Residência</label>
-                            <input type="text" id="bairro" required placeholder="Ex: Água Verde" class="w-full p-4 bg-slate-50 border-2 border-slate-100 rounded-2xl outline-none focus:border-blue-500 transition-all">
-                        </div>
-                        <div class="space-y-2">
-                            <label class="text-xs font-bold text-slate-700">Idade</label>
-                            <input type="number" id="idade" required class="w-full p-4 bg-slate-50 border-2 border-slate-100 rounded-2xl outline-none focus:border-blue-500 transition-all">
-                        </div>
+                    <div class="space-y-2">
+                        <label class="text-xs font-bold text-slate-700">Tempo no Mercado (Anos)</label>
+                        <input type="number" id="tempo_mercado" required class="w-full p-4 bg-slate-50 border-2 border-slate-100 rounded-2xl outline-none focus:border-blue-500 transition-all">
                     </div>
                 </section>
 
-                <section class="space-y-6 pt-6 border-t border-slate-50">
-                    <div class="flex items-center gap-2 text-blue-600 font-black text-[10px] uppercase tracking-[0.2em]">
-                        <i data-lucide="store" class="w-4 h-4"></i> 02. Dados do Estabelecimento
-                    </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div class="space-y-2">
-                            <label class="text-xs font-bold text-slate-700">Ramo de Atividade</label>
-                            <select id="tipo_negocio" required class="w-full p-4 bg-slate-50 border-2 border-slate-100 rounded-2xl outline-none focus:border-blue-500 transition-all"></select>
-                        </div>
-                        <div class="space-y-2">
-                            <label class="text-xs font-bold text-slate-700">Tempo no Mercado (Anos)</label>
-                            <input type="number" id="tempo_mercado" required class="w-full p-4 bg-slate-50 border-2 border-slate-100 rounded-2xl outline-none focus:border-blue-500 transition-all">
-                        </div>
-                    </div>
-
-                    <div class="bg-blue-50 p-8 rounded-[2.5rem] border border-blue-100 space-y-8 mt-6">
-                        <div class="flex justify-between text-[10px] font-black text-blue-900 uppercase tracking-widest">
-                            <span>Morador Local: <span id="label_local" class="text-sm">50%</span></span>
-                            <span>Turista: <span id="label_turista" class="text-sm">50%</span></span>
-                        </div>
-                        <input type="range" id="perc_local" min="0" max="100" value="50" class="w-full h-3 bg-slate-200 rounded-full appearance-none accent-blue-600 cursor-pointer">
-                    </div>
-                </section>
-
-                <section class="space-y-10 pt-6 border-t border-slate-50">
-                    <div class="flex items-center gap-2 text-blue-600 font-black text-[10px] uppercase tracking-[0.2em]">
-                        <i data-lucide="message-square" class="w-4 h-4"></i> 03. Percepções Qualitativas
-                    </div>
-                    <div class="space-y-8" id="qualitative-fields"></div>
-                </section>
-
-                <section class="space-y-4 pt-6 border-t border-slate-50">
-                    <div class="bg-slate-50 p-6 md:p-8 rounded-3xl border border-slate-200 text-sm text-slate-600">
-                        <label class="flex items-start gap-4 cursor-pointer group">
-                            <input type="checkbox" required class="mt-1 w-6 h-6 border-2 border-slate-300 rounded accent-blue-600">
-                            <span class="text-xs md:text-sm font-bold text-slate-700 leading-snug">
-                                Declaro que li as informações sobre esta pesquisa acadêmica da UFPR, compreendo a garantia de anonimato e aceito participar voluntariamente.
-                            </span>
-                        </label>
-                    </div>
-                </section>
+                <div class="space-y-8" id="qualitative-fields"></div>
 
                 <button type="submit" id="btnSubmit" class="w-full bg-slate-900 text-white font-black py-6 rounded-3xl shadow-2xl hover:bg-black transition-all uppercase tracking-widest text-sm">
-                    ENVIAR RESPOSTAS 🚀
+                    Enviar para a UFPR 🚀
                 </button>
             </div>
         </form>
     </div>
 
-    <div id="successModal" class="fixed inset-0 bg-slate-900/95 backdrop-blur-lg hidden flex items-center justify-center p-4 z-50">
-        <div class="bg-white rounded-[3rem] p-8 md:p-12 max-w-xl w-full shadow-2xl text-center">
-            <div class="w-24 h-24 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-8">
-                <i data-lucide="heart" class="w-12 h-12"></i>
+    <div id="successModal" class="fixed inset-0 bg-slate-900/95 backdrop-blur-lg hidden flex items-center justify-center p-4 z-50 text-center">
+        <div class="bg-white rounded-[3rem] p-10 max-w-md w-full">
+            <div class="w-20 h-20 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                <i data-lucide="check" class="w-10 h-10"></i>
             </div>
-            <h3 class="text-3xl font-black text-slate-900 mb-4">Agradecemos sua Atenção!</h3>
-            <p class="text-slate-600 text-lg leading-relaxed mb-8">
-                Sua contribuição foi salva com sucesso. Ela ajudará bastante a <strong>entender, avaliar e melhorar o Mercado Municipal de Curitiba</strong> através desta pesquisa acadêmica.
+            <h3 class="text-2xl font-black text-slate-900">Muito Obrigado!</h3>
+            <p class="text-slate-600 mt-4 leading-relaxed">
+                Seu relato é precioso. Ele ajudará bastante a <strong>entender, avaliar e melhorar o Mercado Municipal de Curitiba</strong> através desta pesquisa acadêmica.
             </p>
-            <div class="h-px bg-slate-100 w-full mb-8"></div>
-            <button onclick="window.location.reload()" class="w-full bg-blue-600 text-white font-bold py-5 rounded-3xl hover:bg-blue-700 transition-all uppercase tracking-widest text-xs">
-                Finalizar e Fechar
-            </button>
+            <button onclick="window.location.reload()" class="mt-8 bg-blue-600 text-white px-10 py-4 rounded-full font-bold uppercase tracking-widest text-xs">Fechar</button>
         </div>
     </div>
 
@@ -151,164 +77,109 @@
         const googleSheetsUrl = "https://script.google.com/macros/s/AKfycbzEqVioLcidukAZ8eh_r1t3lkTjLaaqeNYJdYWP-2KaAUSGc9TjN4xGXOT0x-5OwniG/exec"; 
         const groqApiKey = "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";
 
-        const establishmentTypes = ["Açougue", "Aquário", "Artesanatos", "Bebidas", "Café e Chás", "Cereais", "Chocolates", "Doces", "Especiarias", "Floricultura", "Frutas e Verduras", "Massas", "Peixaria", "Pet Shop", "Restaurantes e Lanchonetes", "Tabacaria", "Utilidades Domésticas"];
-        
+        const ramos = ["Açougue", "Artesanatos", "Bebidas", "Café e Chás", "Cereais", "Doces", "Especiarias", "Floricultura", "Frutas e Verduras", "Massas", "Peixaria", "Restaurantes", "Utilidades"];
         const questions = [
-            { id: 'qa1', label: '1. Como você percebe os impactos das transformações do Mercado na sua rotina e no perfil dos clientes?' },
-            { id: 'qa2', label: '2. De que maneira as reformas físicas impactaram os custos para manter o seu negócio?' },
-            { id: 'qa3', label: '3. Para qual público você acredita que a gestão atual está direcionando mais investimentos?' },
-            { id: 'qa4', label: '4. Como você descreve a segurança e o ambiente no entorno do Mercado hoje?' },
-            { id: 'qa5', label: '5. Como a presença da Linha Turismo afeta a dinâmica do seu trabalho?' },
-            { id: 'qa6', label: '6. Se pudesse sugerir uma mudança na gestão ou estrutura, o que seria?' }
+            { id: 'qa1', label: '1. Como você percebe as transformações do Mercado na sua rotina e perfil de clientes?' },
+            { id: 'qa5', label: '2. Como a presença da Linha Turismo afeta o seu trabalho diário?' },
+            { id: 'qa6', label: '3. Se pudesse sugerir uma mudança na gestão ou estrutura, o que seria?' }
         ];
 
-        let mediaRecorder;
-        let audioChunks = [];
-        let activeFieldId = null;
+        let mediaRecorder, audioChunks = [], activeFieldId = null;
 
         window.onload = () => {
             lucide.createIcons();
             const select = document.getElementById('tipo_negocio');
-            establishmentTypes.sort().forEach(t => {
-                const opt = document.createElement('option');
-                opt.value = t; opt.textContent = t;
-                select.appendChild(opt);
+            ramos.sort().forEach(t => {
+                const opt = new Option(t, t);
+                select.add(opt);
             });
 
-            const qualContainer = document.getElementById('qualitative-fields');
+            const container = document.getElementById('qualitative-fields');
             questions.forEach(q => {
-                const div = document.createElement('div');
-                div.className = "space-y-4";
-                div.innerHTML = `
-                    <label class="text-sm font-bold text-slate-800 block">${q.label}</label>
-                    <div class="relative">
-                        <textarea id="${q.id}" required placeholder="Fale no microfone ou digite aqui..." class="w-full p-6 bg-slate-50 border-2 border-slate-100 rounded-3xl min-h-[140px] outline-none focus:border-blue-500 text-sm pr-16 shadow-sm transition-all"></textarea>
-                        <button type="button" id="mic-${q.id}" onclick="toggleGroqRecording('${q.id}')" class="absolute top-4 right-4 p-3 rounded-2xl shadow-lg bg-white text-slate-400 hover:text-blue-600 border border-slate-100 transition-all">
-                            <i data-lucide="mic" class="w-5 h-5"></i>
-                        </button>
-                    </div>
-                `;
-                qualContainer.appendChild(div);
+                container.innerHTML += `
+                    <div class="space-y-4">
+                        <label class="text-sm font-bold text-slate-800 block">${q.label}</label>
+                        <div class="relative">
+                            <textarea id="${q.id}" required class="w-full p-6 bg-slate-50 border-2 border-slate-100 rounded-3xl min-h-[140px] outline-none focus:border-blue-500 text-sm pr-16 shadow-sm"></textarea>
+                            <button type="button" onclick="toggleRecording('${q.id}')" id="mic-${q.id}" class="absolute top-4 right-4 p-3 rounded-2xl bg-white text-slate-400 border border-slate-100">
+                                <i data-lucide="mic" class="w-5 h-5"></i>
+                            </button>
+                        </div>
+                    </div>`;
             });
             lucide.createIcons();
-
-            document.getElementById('perc_local').oninput = (e) => {
-                const val = e.target.value;
-                document.getElementById('label_local').innerText = val + '%';
-                document.getElementById('label_turista').innerText = (100 - val) + '%';
-            };
         };
 
         function showStatus(text, type = 'info') {
             const bar = document.getElementById('statusBar');
-            const icon = document.getElementById('statusIcon');
-            bar.className = `mx-8 mt-8 p-4 rounded-2xl text-sm font-bold border flex items-center gap-3 transition-all ${type === 'error' ? 'bg-red-50 text-red-700 border-red-100' : 'bg-blue-50 text-blue-700 border-blue-100'}`;
-            icon.innerHTML = type === 'error' ? '<i data-lucide="alert-circle"></i>' : '<i data-lucide="info"></i>';
+            bar.className = `mx-8 mt-6 p-4 rounded-2xl text-sm font-bold border flex items-center gap-3 ${type === 'error' ? 'bg-red-50 text-red-700 border-red-100' : 'bg-emerald-50 text-emerald-700 border-emerald-100'}`;
             document.getElementById('statusText').innerText = text;
             bar.classList.remove('hidden');
-            lucide.createIcons();
             setTimeout(() => bar.classList.add('hidden'), 5000);
         }
 
-        async function toggleGroqRecording(id) {
-            if (activeFieldId === id) { stopRecording(); return; }
-            if (activeFieldId) stopRecording();
+        async function toggleRecording(id) {
+            if (activeFieldId === id) { stopRec(); return; }
             try {
                 const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-                const options = MediaRecorder.isTypeSupported('audio/webm;codecs=opus') ? { mimeType: 'audio/webm;codecs=opus' } : {};
-                mediaRecorder = new MediaRecorder(stream, options);
+                mediaRecorder = new MediaRecorder(stream);
                 audioChunks = [];
                 activeFieldId = id;
-                mediaRecorder.ondataavailable = e => { if (e.data.size > 0) audioChunks.push(e.data); };
+                mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
                 mediaRecorder.onstop = () => {
-                    const blob = new Blob(audioChunks, { type: mediaRecorder.mimeType || 'audio/webm' });
-                    processAudio(blob, id);
+                    const blob = new Blob(audioChunks, { type: 'audio/webm' });
+                    transcribe(blob, id);
                     stream.getTracks().forEach(t => t.stop());
                 };
                 mediaRecorder.start();
-                const btn = document.getElementById(`mic-${id}`);
-                btn.classList.add('bg-red-500', 'text-white', 'recording-pulse');
-                btn.innerHTML = '<i data-lucide="mic-off"></i>';
-                lucide.createIcons();
-                showStatus("Ouvindo... Pode falar.");
-            } catch (err) {
-                showStatus("Erro ao acessar o microfone.", "error");
-            }
+                document.getElementById(`mic-${id}`).classList.add('bg-red-500', 'text-white', 'recording-pulse');
+                showStatus("Gravando voz...");
+            } catch (err) { showStatus("Erro no microfone.", "error"); }
         }
 
-        function stopRecording() {
-            if (mediaRecorder && mediaRecorder.state !== 'inactive') {
-                mediaRecorder.stop();
-                const btn = document.getElementById(`mic-${activeFieldId}`);
-                btn.classList.remove('bg-red-500', 'text-white', 'recording-pulse');
-                btn.innerHTML = '<i data-lucide="mic"></i>';
-                lucide.createIcons();
-                activeFieldId = null;
-            }
+        function stopRec() {
+            mediaRecorder.stop();
+            document.getElementById(`mic-${activeFieldId}`).classList.remove('bg-red-500', 'text-white', 'recording-pulse');
+            activeFieldId = null;
         }
 
-        async function processAudio(blob, id) {
+        async function transcribe(blob, id) {
             const area = document.getElementById(id);
-            const originalPlaceholder = area.placeholder;
-            area.placeholder = "Transcrevendo fala... aguarde.";
-            const formData = new FormData();
-            formData.append('file', blob, 'audio.webm');
-            formData.append('model', 'whisper-large-v3-turbo');
-            formData.append('language', 'pt');
-            formData.append('temperature', '0');
-            formData.append('response_format', 'json');
+            area.placeholder = "Transcrevendo...";
+            const fd = new FormData();
+            fd.append('file', blob, 'audio.webm');
+            fd.append('model', 'whisper-large-v3'); // CONFIGURADO CONFORME SUA IMAGEM
+            fd.append('language', 'pt');
+            fd.append('temperature', '0');
+
             try {
-                const resp = await fetch('https://api.groq.com/openai/v1/audio/transcriptions', {
+                const r = await fetch('https://api.groq.com/openai/v1/audio/transcriptions', {
                     method: 'POST',
                     headers: { 'Authorization': `Bearer ${groqApiKey}` },
-                    body: formData
+                    body: fd
                 });
-                const data = await resp.json();
-                if (data.text) {
-                    area.value = (area.value + " " + data.text).trim();
-                    showStatus("Transcrição concluída!", "success");
-                }
-            } catch (err) {
-                showStatus("Erro no processamento da voz.", "error");
-            } finally {
-                area.placeholder = originalPlaceholder;
-            }
+                const d = await r.json();
+                if (d.text) area.value = (area.value + " " + d.text).trim();
+            } catch (e) { showStatus("Erro na transcrição.", "error"); }
+            area.placeholder = "";
         }
 
         document.getElementById('surveyForm').onsubmit = async (e) => {
             e.preventDefault();
             const btn = document.getElementById('btnSubmit');
-            const originalText = btn.innerText;
-            btn.disabled = true; btn.innerText = "SALVANDO...";
-
+            btn.disabled = true; btn.innerText = "ENVIANDO...";
             const payload = {
-                data_hora: new Date().toLocaleString('pt-BR'),
-                escolaridade: document.getElementById('escolaridade').value,
-                bairro: document.getElementById('bairro').value,
-                idade: document.getElementById('idade').value,
-                tipo_negocio: document.getElementById('tipo_negocio').value,
-                tempo_mercado: document.getElementById('tempo_mercado').value,
-                perc_local: document.getElementById('perc_local').value,
+                data: new Date().toLocaleString(),
+                negocio: document.getElementById('tipo_negocio').value,
+                tempo: document.getElementById('tempo_mercado').value,
                 qa1: document.getElementById('qa1').value,
-                qa2: document.getElementById('qa2').value,
-                qa3: document.getElementById('qa3').value,
-                qa4: document.getElementById('qa4').value,
                 qa5: document.getElementById('qa5').value,
                 qa6: document.getElementById('qa6').value
             };
-
             try {
-                await fetch(googleSheetsUrl, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    body: JSON.stringify(payload)
-                });
+                await fetch(googleSheetsUrl, { method: 'POST', mode: 'no-cors', body: JSON.stringify(payload) });
                 document.getElementById('successModal').classList.remove('hidden');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            } catch (err) {
-                showStatus("Erro ao enviar. Tente novamente.", "error");
-                btn.disabled = false; btn.innerText = originalText;
-            }
+            } catch (err) { showStatus("Erro ao salvar.", "error"); btn.disabled = false; }
         };
     </script>
 </body>
