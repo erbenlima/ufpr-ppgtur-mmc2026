@@ -15,6 +15,10 @@
             70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
             100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
         }
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none; appearance: none; width: 22px; height: 22px;
+            background: #2563eb; cursor: pointer; border-radius: 50%; border: 3px solid white;
+        }
     </style>
 </head>
 <body class="p-4 md:p-8">
@@ -23,15 +27,15 @@
         <header class="bg-white p-6 rounded-3xl shadow-sm border border-slate-200 flex items-center gap-5">
             <img src="https://ufpr.br/wp-content/uploads/2024/03/marca_UFPR.png" class="h-14 w-auto" alt="UFPR">
             <div>
-                <h1 class="text-[10px] font-black uppercase tracking-widest text-slate-400">Mestrado em Turismo</h1>
-                <p class="text-lg font-bold text-slate-800 leading-tight">Pesquisa MMC: Relatos de Lojistas</p>
+                <h1 class="text-[10px] font-black uppercase tracking-widest text-slate-400">Universidade Federal do Paraná</h1>
+                <p class="text-lg font-bold text-slate-800 leading-tight">Pesquisa com Lojistas: Mercado Municipal</p>
             </div>
         </header>
 
         <form id="surveyForm" class="bg-white rounded-[2.5rem] shadow-xl border border-slate-200 overflow-hidden">
             <div class="bg-slate-900 p-8 text-white text-center">
-                <h2 class="text-xl font-extrabold mb-2">Coleta de Dados Qualitativos</h2>
-                <p class="text-slate-400 text-xs italic">Sua voz ajudará a entender e melhorar o Mercado Municipal.</p>
+                <h2 class="text-xl font-extrabold mb-2">Sua opinião é muito importante</h2>
+                <p class="text-slate-400 text-xs italic">A pesquisa é anônima e ajuda no estudo sobre o Mercado.</p>
             </div>
 
             <div id="statusBar" class="hidden mx-8 mt-6 p-4 rounded-2xl text-sm font-bold border flex items-center gap-3 transition-all">
@@ -40,21 +44,70 @@
             </div>
 
             <div class="p-8 space-y-10">
-                <section class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="space-y-2">
-                        <label class="text-xs font-bold text-slate-700">Ramo de Atividade</label>
-                        <select id="tipo_negocio" required class="w-full p-4 bg-slate-50 border-2 border-slate-100 rounded-2xl outline-none focus:border-blue-500 transition-all"></select>
-                    </div>
-                    <div class="space-y-2">
-                        <label class="text-xs font-bold text-slate-700">Tempo no Mercado (Anos)</label>
-                        <input type="number" id="tempo_mercado" required class="w-full p-4 bg-slate-50 border-2 border-slate-100 rounded-2xl outline-none focus:border-blue-500 transition-all">
+                
+                <section class="space-y-6">
+                    <div class="text-blue-600 font-black text-[10px] uppercase tracking-widest">01. Sobre você</div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="space-y-2">
+                            <label class="text-xs font-bold text-slate-700">Até que ano você estudou?</label>
+                            <select id="escolaridade" required class="w-full p-4 bg-slate-50 border-2 border-slate-100 rounded-2xl outline-none focus:border-blue-500 transition-all">
+                                <option value="">Selecione...</option>
+                                <option value="Fundamental">Ensino Fundamental</option>
+                                <option value="Médio">Ensino Médio</option>
+                                <option value="Superior">Ensino Superior</option>
+                                <option value="Pós-graduação">Pós-graduação</option>
+                            </select>
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-xs font-bold text-slate-700">Em qual bairro você mora?</label>
+                            <input type="text" id="bairro" required placeholder="Ex: Portão" class="w-full p-4 bg-slate-50 border-2 border-slate-100 rounded-2xl outline-none focus:border-blue-500 transition-all">
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-xs font-bold text-slate-700">Qual a sua idade?</label>
+                            <input type="number" id="idade" required class="w-full p-4 bg-slate-50 border-2 border-slate-100 rounded-2xl outline-none focus:border-blue-500 transition-all">
+                        </div>
                     </div>
                 </section>
 
-                <div class="space-y-8" id="qualitative-fields"></div>
+                <section class="space-y-6 pt-6 border-t border-slate-50">
+                    <div class="text-blue-600 font-black text-[10px] uppercase tracking-widest">02. Sobre a Loja</div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="space-y-2">
+                            <label class="text-xs font-bold text-slate-700">O que você vende?</label>
+                            <select id="tipo_negocio" required class="w-full p-4 bg-slate-50 border-2 border-slate-100 rounded-2xl outline-none focus:border-blue-500 transition-all"></select>
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-xs font-bold text-slate-700">Há quantos anos está no Mercado?</label>
+                            <input type="number" id="tempo_mercado" required class="w-full p-4 bg-slate-50 border-2 border-slate-100 rounded-2xl outline-none focus:border-blue-500 transition-all">
+                        </div>
+                    </div>
+
+                    <div class="bg-blue-50 p-6 rounded-3xl border border-blue-100 space-y-6 mt-4">
+                        <label class="text-xs font-bold text-blue-900 block text-center">Como é o seu público hoje?</label>
+                        <div class="flex justify-between text-[10px] font-black text-blue-800 uppercase px-2">
+                            <span>MORADOR LOCAL: <span id="label_local" class="text-sm">50%</span></span>
+                            <span>TURISTA: <span id="label_turista" class="text-sm">50%</span></span>
+                        </div>
+                        <input type="range" id="perc_local" min="0" max="100" value="50" class="w-full h-2 bg-slate-200 rounded-full appearance-none accent-blue-600 cursor-pointer">
+                    </div>
+                </section>
+
+                <section class="space-y-8 pt-6 border-t border-slate-50">
+                    <div class="text-blue-600 font-black text-[10px] uppercase tracking-widest">03. Suas percepções</div>
+                    <div id="questions-container" class="space-y-8"></div>
+                </section>
+
+                <section class="pt-6 border-t border-slate-50">
+                    <label class="flex items-start gap-4 cursor-pointer bg-slate-50 p-4 rounded-2xl">
+                        <input type="checkbox" required class="mt-1 w-5 h-5 accent-blue-600">
+                        <span class="text-xs font-bold text-slate-700 leading-snug">
+                            Aceito participar desta pesquisa para ajudar no estudo da UFPR sobre o Mercado Municipal. Sei que minhas respostas são anônimas.
+                        </span>
+                    </label>
+                </section>
 
                 <button type="submit" id="btnSubmit" class="w-full bg-slate-900 text-white font-black py-6 rounded-3xl shadow-2xl hover:bg-black transition-all uppercase tracking-widest text-sm">
-                    Enviar para a UFPR 🚀
+                    Enviar Respostas 🚀
                 </button>
             </div>
         </form>
@@ -67,9 +120,9 @@
             </div>
             <h3 class="text-2xl font-black text-slate-900">Muito Obrigado!</h3>
             <p class="text-slate-600 mt-4 leading-relaxed">
-                Seu relato é precioso. Ele ajudará bastante a <strong>entender, avaliar e melhorar o Mercado Municipal de Curitiba</strong> através desta pesquisa acadêmica.
+                Suas respostas foram salvas. Elas vão ajudar muito a <strong>entender e melhorar o Mercado Municipal de Curitiba</strong>.
             </p>
-            <button onclick="window.location.reload()" class="mt-8 bg-blue-600 text-white px-10 py-4 rounded-full font-bold uppercase tracking-widest text-xs">Fechar</button>
+            <button onclick="window.location.reload()" class="mt-8 bg-blue-600 text-white px-10 py-4 rounded-full font-bold uppercase tracking-widest text-xs">Sair</button>
         </div>
     </div>
 
@@ -77,11 +130,15 @@
         const googleSheetsUrl = "https://script.google.com/macros/s/AKfycbzEqVioLcidukAZ8eh_r1t3lkTjLaaqeNYJdYWP-2KaAUSGc9TjN4xGXOT0x-5OwniG/exec"; 
         const groqApiKey = "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";
 
-        const ramos = ["Açougue", "Artesanatos", "Bebidas", "Café e Chás", "Cereais", "Doces", "Especiarias", "Floricultura", "Frutas e Verduras", "Massas", "Peixaria", "Restaurantes", "Utilidades"];
+        const ramos = ["Açougue", "Artesanato", "Bebidas", "Café e Chás", "Cereais/Grãos", "Doces", "Temperos", "Flores", "Frutas e Verduras", "Massas", "Peixaria", "Restaurante/Lanche", "Outros"];
+        
         const questions = [
-            { id: 'qa1', label: '1. Como você percebe as transformações do Mercado na sua rotina e perfil de clientes?' },
-            { id: 'qa5', label: '2. Como a presença da Linha Turismo afeta o seu trabalho diário?' },
-            { id: 'qa6', label: '3. Se pudesse sugerir uma mudança na gestão ou estrutura, o que seria?' }
+            { id: 'qa1', label: '1. Como você percebe as mudanças no Mercado e no tipo de cliente ao longo do tempo?' },
+            { id: 'qa2', label: '2. Como as reformas e obras no prédio mexeram com os seus custos e regras de trabalho?' },
+            { id: 'qa3', label: '3. Para qual público você acha que a prefeitura está dando mais atenção e investimentos hoje?' },
+            { id: 'qa4', label: '4. Como você descreve a segurança e o movimento nas calçadas e ruas em volta do Mercado?' },
+            { id: 'qa5', label: '5. Como a Linha Turismo afeta o seu dia a dia aqui?' },
+            { id: 'qa6', label: '6. Se pudesse mudar algo na administração ou no prédio, o que seria?' }
         ];
 
         let mediaRecorder, audioChunks = [], activeFieldId = null;
@@ -89,37 +146,33 @@
         window.onload = () => {
             lucide.createIcons();
             const select = document.getElementById('tipo_negocio');
-            ramos.sort().forEach(t => {
-                const opt = new Option(t, t);
-                select.add(opt);
-            });
+            ramos.sort().forEach(t => select.add(new Option(t, t)));
 
-            const container = document.getElementById('qualitative-fields');
+            const container = document.getElementById('questions-container');
             questions.forEach(q => {
                 container.innerHTML += `
                     <div class="space-y-4">
-                        <label class="text-sm font-bold text-slate-800 block">${q.label}</label>
+                        <label class="text-sm font-bold text-slate-800 block leading-snug">${q.label}</label>
                         <div class="relative">
-                            <textarea id="${q.id}" required class="w-full p-6 bg-slate-50 border-2 border-slate-100 rounded-3xl min-h-[140px] outline-none focus:border-blue-500 text-sm pr-16 shadow-sm"></textarea>
-                            <button type="button" onclick="toggleRecording('${q.id}')" id="mic-${q.id}" class="absolute top-4 right-4 p-3 rounded-2xl bg-white text-slate-400 border border-slate-100">
+                            <textarea id="${q.id}" required placeholder="Fale no microfone ou digite..." class="w-full p-6 bg-slate-50 border-2 border-slate-100 rounded-3xl min-h-[140px] outline-none focus:border-blue-500 text-sm pr-16 shadow-sm"></textarea>
+                            <button type="button" onclick="toggleRecording('${q.id}')" id="mic-${q.id}" class="absolute top-4 right-4 p-3 rounded-2xl bg-white text-slate-400 border border-slate-100 shadow-sm transition-all">
                                 <i data-lucide="mic" class="w-5 h-5"></i>
                             </button>
                         </div>
                     </div>`;
             });
             lucide.createIcons();
-        };
 
-        function showStatus(text, type = 'info') {
-            const bar = document.getElementById('statusBar');
-            bar.className = `mx-8 mt-6 p-4 rounded-2xl text-sm font-bold border flex items-center gap-3 ${type === 'error' ? 'bg-red-50 text-red-700 border-red-100' : 'bg-emerald-50 text-emerald-700 border-emerald-100'}`;
-            document.getElementById('statusText').innerText = text;
-            bar.classList.remove('hidden');
-            setTimeout(() => bar.classList.add('hidden'), 5000);
-        }
+            document.getElementById('perc_local').oninput = (e) => {
+                const val = e.target.value;
+                document.getElementById('label_local').innerText = val + '%';
+                document.getElementById('label_turista').innerText = (100 - val) + '%';
+            };
+        };
 
         async function toggleRecording(id) {
             if (activeFieldId === id) { stopRec(); return; }
+            if (activeFieldId) stopRec();
             try {
                 const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
                 mediaRecorder = new MediaRecorder(stream);
@@ -133,8 +186,7 @@
                 };
                 mediaRecorder.start();
                 document.getElementById(`mic-${id}`).classList.add('bg-red-500', 'text-white', 'recording-pulse');
-                showStatus("Gravando voz...");
-            } catch (err) { showStatus("Erro no microfone.", "error"); }
+            } catch (err) { alert("Dê permissão ao microfone para falar."); }
         }
 
         function stopRec() {
@@ -145,10 +197,10 @@
 
         async function transcribe(blob, id) {
             const area = document.getElementById(id);
-            area.placeholder = "Transcrevendo...";
+            area.placeholder = "Escrevendo sua fala...";
             const fd = new FormData();
             fd.append('file', blob, 'audio.webm');
-            fd.append('model', 'whisper-large-v3'); // CONFIGURADO CONFORME SUA IMAGEM
+            fd.append('model', 'whisper-large-v3');
             fd.append('language', 'pt');
             fd.append('temperature', '0');
 
@@ -160,26 +212,36 @@
                 });
                 const d = await r.json();
                 if (d.text) area.value = (area.value + " " + d.text).trim();
-            } catch (e) { showStatus("Erro na transcrição.", "error"); }
-            area.placeholder = "";
+            } catch (e) { console.error(e); }
+            area.placeholder = "Fale no microfone ou digite...";
         }
 
         document.getElementById('surveyForm').onsubmit = async (e) => {
             e.preventDefault();
             const btn = document.getElementById('btnSubmit');
             btn.disabled = true; btn.innerText = "ENVIANDO...";
+
             const payload = {
-                data: new Date().toLocaleString(),
-                negocio: document.getElementById('tipo_negocio').value,
-                tempo: document.getElementById('tempo_mercado').value,
+                data_hora: new Date().toLocaleString('pt-BR'),
+                escolaridade: document.getElementById('escolaridade').value,
+                bairro: document.getElementById('bairro').value,
+                idade: document.getElementById('idade').value,
+                tipo_negocio: document.getElementById('tipo_negocio').value,
+                tempo_mercado: document.getElementById('tempo_mercado').value,
+                perc_local: document.getElementById('perc_local').value,
+                perc_turista: (100 - document.getElementById('perc_local').value),
                 qa1: document.getElementById('qa1').value,
+                qa2: document.getElementById('qa2').value,
+                qa3: document.getElementById('qa3').value,
+                qa4: document.getElementById('qa4').value,
                 qa5: document.getElementById('qa5').value,
                 qa6: document.getElementById('qa6').value
             };
+
             try {
                 await fetch(googleSheetsUrl, { method: 'POST', mode: 'no-cors', body: JSON.stringify(payload) });
                 document.getElementById('successModal').classList.remove('hidden');
-            } catch (err) { showStatus("Erro ao salvar.", "error"); btn.disabled = false; }
+            } catch (err) { alert("Erro ao enviar. Tente novamente."); btn.disabled = false; btn.innerText = "Enviar"; }
         };
     </script>
 </body>
