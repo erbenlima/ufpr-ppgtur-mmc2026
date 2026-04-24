@@ -35,7 +35,7 @@
         <form id="surveyForm" class="bg-white rounded-[2.5rem] shadow-xl border border-slate-200 overflow-hidden">
             <div class="bg-slate-900 p-8 text-white text-center">
                 <h2 class="text-xl font-extrabold mb-2">Sua opinião é muito importante</h2>
-                <p class="text-slate-400 text-xs italic">A pesquisa é anônima e ajuda no estudo sobre o Mercado.</p>
+                <p class="text-slate-400 text-xs italic">A pesquisa não identifica seu nome nem sua banca. É anônima.</p>
             </div>
 
             <div id="statusBar" class="hidden mx-8 mt-6 p-4 rounded-2xl text-sm font-bold border flex items-center gap-3 transition-all">
@@ -60,11 +60,11 @@
                         </div>
                         <div class="space-y-2">
                             <label class="text-xs font-bold text-slate-700">Em qual bairro você mora?</label>
-                            <input type="text" id="bairro" required placeholder="Ex: Portão" class="w-full p-4 bg-slate-50 border-2 border-slate-100 rounded-2xl outline-none focus:border-blue-500 transition-all">
+                            <input type="text" id="bairro" required placeholder="Ex: Batel" class="w-full p-4 bg-slate-50 border-2 border-slate-100 rounded-2xl outline-none focus:border-blue-500 transition-all">
                         </div>
                         <div class="space-y-2">
-                            <label class="text-xs font-bold text-slate-700">Qual a sua idade?</label>
-                            <input type="number" id="idade" required class="w-full p-4 bg-slate-50 border-2 border-slate-100 rounded-2xl outline-none focus:border-blue-500 transition-all">
+                            <label class="text-xs font-bold text-slate-700">Sua idade</label>
+                            <input type="number" id="idade" required placeholder="Ex: 40" class="w-full p-4 bg-slate-50 border-2 border-slate-100 rounded-2xl outline-none focus:border-blue-500 transition-all">
                         </div>
                     </div>
                 </section>
@@ -77,8 +77,8 @@
                             <select id="tipo_negocio" required class="w-full p-4 bg-slate-50 border-2 border-slate-100 rounded-2xl outline-none focus:border-blue-500 transition-all"></select>
                         </div>
                         <div class="space-y-2">
-                            <label class="text-xs font-bold text-slate-700">Há quantos anos está no Mercado?</label>
-                            <input type="number" id="tempo_mercado" required class="w-full p-4 bg-slate-50 border-2 border-slate-100 rounded-2xl outline-none focus:border-blue-500 transition-all">
+                            <label class="text-xs font-bold text-slate-700">Quantos anos de Mercado?</label>
+                            <input type="number" id="tempo_mercado" required placeholder="Ex: 10" class="w-full p-4 bg-slate-50 border-2 border-slate-100 rounded-2xl outline-none focus:border-blue-500 transition-all">
                         </div>
                     </div>
 
@@ -101,7 +101,7 @@
                     <label class="flex items-start gap-4 cursor-pointer bg-slate-50 p-4 rounded-2xl">
                         <input type="checkbox" required class="mt-1 w-5 h-5 accent-blue-600">
                         <span class="text-xs font-bold text-slate-700 leading-snug">
-                            Aceito participar desta pesquisa para ajudar no estudo da UFPR sobre o Mercado Municipal. Sei que minhas respostas são anônimas.
+                            Aceito participar desta pesquisa anônima para ajudar no estudo da UFPR sobre o Mercado Municipal.
                         </span>
                     </label>
                 </section>
@@ -116,11 +116,11 @@
     <div id="successModal" class="fixed inset-0 bg-slate-900/95 backdrop-blur-lg hidden flex items-center justify-center p-4 z-50 text-center">
         <div class="bg-white rounded-[3rem] p-10 max-w-md w-full">
             <div class="w-20 h-20 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-6">
-                <i data-lucide="check" class="w-10 h-10"></i>
+                <i data-lucide="heart" class="w-10 h-10"></i>
             </div>
-            <h3 class="text-2xl font-black text-slate-900">Muito Obrigado!</h3>
+            <h3 class="text-2xl font-black text-slate-900">Agradecemos sua Atenção!</h3>
             <p class="text-slate-600 mt-4 leading-relaxed">
-                Suas respostas foram salvas. Elas vão ajudar muito a <strong>entender e melhorar o Mercado Municipal de Curitiba</strong>.
+                Suas respostas foram salvas. Elas vão ajudar muito a <strong>entender, avaliar e melhorar o Mercado Municipal de Curitiba</strong>.
             </p>
             <button onclick="window.location.reload()" class="mt-8 bg-blue-600 text-white px-10 py-4 rounded-full font-bold uppercase tracking-widest text-xs">Sair</button>
         </div>
@@ -131,14 +131,13 @@
         const groqApiKey = "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";
 
         const ramos = ["Açougue", "Artesanato", "Bebidas", "Café e Chás", "Cereais/Grãos", "Doces", "Temperos", "Flores", "Frutas e Verduras", "Massas", "Peixaria", "Restaurante/Lanche", "Outros"];
-        
         const questions = [
             { id: 'qa1', label: '1. Como você percebe as mudanças no Mercado e no tipo de cliente ao longo do tempo?' },
-            { id: 'qa2', label: '2. Como as reformas e obras no prédio mexeram com os seus custos e regras de trabalho?' },
-            { id: 'qa3', label: '3. Para qual público você acha que a prefeitura está dando mais atenção e investimentos hoje?' },
-            { id: 'qa4', label: '4. Como você descreve a segurança e o movimento nas calçadas e ruas em volta do Mercado?' },
-            { id: 'qa5', label: '5. Como a Linha Turismo afeta o seu dia a dia aqui?' },
-            { id: 'qa6', label: '6. Se pudesse mudar algo na administração ou no prédio, o que seria?' }
+            { id: 'qa2', label: '2. Como as reformas no prédio mexeram com os seus custos e regras de trabalho?' },
+            { id: 'qa3', label: '3. Para qual público você acha que a prefeitura está dando mais atenção hoje?' },
+            { id: 'qa4', label: '4. Como você descreve a segurança e o movimento nas ruas em volta do Mercado?' },
+            { id: 'qa5', label: '5. Como a presença da Linha Turismo afeta o seu dia a dia aqui?' },
+            { id: 'qa6', label: '6. Se você pudesse mudar algo na administração ou no prédio, o que seria?' }
         ];
 
         let mediaRecorder, audioChunks = [], activeFieldId = null;
@@ -154,8 +153,8 @@
                     <div class="space-y-4">
                         <label class="text-sm font-bold text-slate-800 block leading-snug">${q.label}</label>
                         <div class="relative">
-                            <textarea id="${q.id}" required placeholder="Fale no microfone ou digite..." class="w-full p-6 bg-slate-50 border-2 border-slate-100 rounded-3xl min-h-[140px] outline-none focus:border-blue-500 text-sm pr-16 shadow-sm"></textarea>
-                            <button type="button" onclick="toggleRecording('${q.id}')" id="mic-${q.id}" class="absolute top-4 right-4 p-3 rounded-2xl bg-white text-slate-400 border border-slate-100 shadow-sm transition-all">
+                            <textarea id="${q.id}" required placeholder="Aperte o microfone para falar ou digite..." class="w-full p-6 bg-slate-50 border-2 border-slate-100 rounded-3xl min-h-[140px] outline-none focus:border-blue-500 text-sm pr-16 shadow-sm"></textarea>
+                            <button type="button" onclick="toggleRecording('${q.id}')" id="mic-${q.id}" class="absolute top-4 right-4 p-3 rounded-2xl bg-white text-slate-400 border border-slate-100 transition-all">
                                 <i data-lucide="mic" class="w-5 h-5"></i>
                             </button>
                         </div>
@@ -170,14 +169,21 @@
             };
         };
 
+        function showStatus(text, type = 'info') {
+            const bar = document.getElementById('statusBar');
+            bar.className = `mx-8 mt-6 p-4 rounded-2xl text-sm font-bold border flex items-center gap-3 transition-all ${type === 'error' ? 'bg-red-50 text-red-700 border-red-100' : 'bg-emerald-50 text-emerald-700 border-emerald-100'}`;
+            document.getElementById('statusText').innerText = text;
+            bar.classList.remove('hidden');
+            setTimeout(() => bar.classList.add('hidden'), 5000);
+        }
+
         async function toggleRecording(id) {
             if (activeFieldId === id) { stopRec(); return; }
             if (activeFieldId) stopRec();
             try {
                 const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
                 mediaRecorder = new MediaRecorder(stream);
-                audioChunks = [];
-                activeFieldId = id;
+                audioChunks = []; activeFieldId = id;
                 mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
                 mediaRecorder.onstop = () => {
                     const blob = new Blob(audioChunks, { type: 'audio/webm' });
@@ -186,7 +192,8 @@
                 };
                 mediaRecorder.start();
                 document.getElementById(`mic-${id}`).classList.add('bg-red-500', 'text-white', 'recording-pulse');
-            } catch (err) { alert("Dê permissão ao microfone para falar."); }
+                showStatus("Ouvindo fala...");
+            } catch (err) { showStatus("Ligue o microfone.", "error"); }
         }
 
         function stopRec() {
@@ -197,10 +204,10 @@
 
         async function transcribe(blob, id) {
             const area = document.getElementById(id);
-            area.placeholder = "Escrevendo sua fala...";
+            area.placeholder = "Escrevendo sua fala (Turbo)...";
             const fd = new FormData();
-            fd.append('file', blob, 'audio.webm');
-            fd.append('model', 'whisper-large-v3');
+            fd.append('file', blob, 'audio.m4a');
+            fd.append('model', 'whisper-large-v3-turbo'); // MODELO TURBO
             fd.append('language', 'pt');
             fd.append('temperature', '0');
 
@@ -212,7 +219,8 @@
                 });
                 const d = await r.json();
                 if (d.text) area.value = (area.value + " " + d.text).trim();
-            } catch (e) { console.error(e); }
+                showStatus("Voz convertida!", "success");
+            } catch (e) { showStatus("Erro ao converter áudio.", "error"); }
             area.placeholder = "Fale no microfone ou digite...";
         }
 
@@ -241,7 +249,7 @@
             try {
                 await fetch(googleSheetsUrl, { method: 'POST', mode: 'no-cors', body: JSON.stringify(payload) });
                 document.getElementById('successModal').classList.remove('hidden');
-            } catch (err) { alert("Erro ao enviar. Tente novamente."); btn.disabled = false; btn.innerText = "Enviar"; }
+            } catch (err) { showStatus("Erro ao enviar.", "error"); btn.disabled = false; btn.innerText = "Tentar de novo"; }
         };
     </script>
 </body>
